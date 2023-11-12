@@ -1,2 +1,5 @@
 # Image_processing
-Image processing 
+
+Stuffs for uni
+
+## Feels free to steal because they are mostly stolen, too :trolleh:
