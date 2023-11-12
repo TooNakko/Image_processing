@@ -50,7 +50,7 @@ def gaussian_filter(image, kernel_size, sigma):
     )
     gaussian_kernel_value  =  kernel / np.sum(kernel)
 
-    filtered_image =  convolve2d(image, gaussian_kernel_value, mode='same')
+    filtered_image =  convolve2d(image, gaussian_kernel_value, mode='same', boundary="symm")
     return filtered_image
 
 

@@ -8,12 +8,23 @@ import time
 
 original_image = cv2.cvtColor(cv2.imread('HQ.jpg'), cv2.COLOR_BGR2GRAY)
 
-print("Input the psnr:")
-psnr = int(input())
-print("\nInput the blur kernel size:")
-blur_kernel_size = int(input())
+while(True):
+  print("Input the psnr:")
+  psnr = int(input())
+  if(psnr<=0):
+    print("psnr must > 0")
+    continue
+  break
 
-print("Generating noisy image---")
+while(True):
+  print("\nInput the blur kernel size:")
+  blur_kernel_size = int(input())
+  if(blur_kernel_size<0):
+    print("psnr must >= 0")
+    continue
+  break
+
+print("Generating noisy image with psnr = {0} and blur kernel size = {1} ---".format(psnr, blur_kernel_size))
 temp_time = time.time()
 noisy_image = gen_img.simulate_blur_and_noise(original_image, psnr, blur_kernel_size)
 print("Took {0:.2f} seconds.\n".format(time.time() - temp_time))
