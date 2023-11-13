@@ -6,7 +6,7 @@ import plotting
 import MSE_and_psnr as Map
 import time
 
-original_image = cv2.cvtColor(cv2.imread('HQQ.jpg'), cv2.COLOR_BGR2GRAY)
+original_image = cv2.cvtColor(cv2.imread('HQ.jpg'), cv2.COLOR_BGR2GRAY)
 
 while(True):
   print("Input the psnr:")
@@ -45,8 +45,8 @@ gaussian_recovered_image = rcv.gaussian_filter(noisy_image, 5, 1.5)
 print("Took {0:.2f} seconds.\n".format(time.time() - temp_time))
 
 temp_time = time.time()
-print("Processing low pass filter method---")
-low_pass_recovered_image = rcv.low_pass_filter(noisy_image, "gaussian", 5 )
+print("Processing Richardson and Lucy filter method---")
+richardson_lucy_recovered_image = rcv.richardson_lucy_filter(noisy_image, blur_kernel_size, 4)
 print("Took {0:.2f} seconds.".format(time.time() - temp_time))
 
 
@@ -56,8 +56,8 @@ print("""
     1. Blur box filter method: {2:.2f}
     2. Weiner filter method: {3:.2f}
     3. Gaussian filter method: {4:.2f}
-    4. Low pass filter method: {5:.2f}
+    4. Richardson and Lucy filter method: {5:.2f}
       """.format(psnr, blur_kernel_size, Map.mse(original_image, box_blur_recovered_image), Map.mse(original_image, weiner_recovered_image),
-                 Map.mse(original_image, gaussian_recovered_image), Map.mse(original_image, low_pass_recovered_image)))
+                 Map.mse(original_image, gaussian_recovered_image), Map.mse(original_image, richardson_lucy_recovered_image)))
 
-plotting.plotting(original_image, noisy_image, box_blur_recovered_image, weiner_recovered_image, gaussian_recovered_image, low_pass_recovered_image)
+plotting.plotting(original_image, noisy_image, box_blur_recovered_image, weiner_recovered_image, gaussian_recovered_image, richardson_lucy_recovered_image)

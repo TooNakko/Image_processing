@@ -12,14 +12,14 @@ def add_gaussian_noise(img, psnr):
     cv2.normalize(noisy_image, noisy_image, 0, 255, cv2.NORM_MINMAX, dtype=-1)
     return noisy_image
 
-def blur_image(image, kernel_size):
+def add_blur(image, kernel_size):
     kernel = cv2.getGaussianKernel(kernel_size, 0)
     kernel_2d = np.outer(kernel, kernel.transpose())
     blurred_image = cv2.filter2D(image, -1, kernel_2d)
     return blurred_image
 
 def simulate_blur_and_noise(original_image, psnr, blur_kernel_size):
-    blurred_image = blur_image(original_image, kernel_size=blur_kernel_size)
+    blurred_image = add_blur(original_image, kernel_size=blur_kernel_size)
     noisy_blurred_image = add_gaussian_noise(blurred_image, psnr)
     return noisy_blurred_image
 
