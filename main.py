@@ -6,7 +6,7 @@ import plotting
 import MSE_and_psnr as Map
 import time
 
-original_image = cv2.cvtColor(cv2.imread('HQ.jpg'), cv2.COLOR_BGR2GRAY)
+original_image = cv2.cvtColor(cv2.imread('HQQ.jpg'), cv2.COLOR_BGR2GRAY)
 
 while(True):
   print("Input the psnr:")
@@ -36,35 +36,28 @@ print("Took {0:.2f} seconds.\n".format(time.time() - temp_time))
 
 temp_time = time.time()
 print("Processing weiner method---")
-weiner_recovered_image = rcv.wiener_filter(noisy_image, 5, 5)
+weiner_recovered_image = rcv.wiener_filter(noisy_image, 5)
 print("Took {0:.2f} seconds.\n".format(time.time() - temp_time))
 
 temp_time = time.time()
 print("Processing gaussian filter method---")
-gaussian_filter_recovered_image = rcv.gaussian_filter(noisy_image, 5, 1.5)
+gaussian_recovered_image = rcv.gaussian_filter(noisy_image, 5, 1.5)
 print("Took {0:.2f} seconds.\n".format(time.time() - temp_time))
 
 temp_time = time.time()
-print("Processing median filter method---")
-median_filter_recovered_image = rcv.median_filter(noisy_image, 4)
+print("Processing low pass filter method---")
+low_pass_recovered_image = rcv.low_pass_filter(noisy_image, "gaussian", 5 )
 print("Took {0:.2f} seconds.".format(time.time() - temp_time))
 
 
 print("""
+    With psnr = {0}, blur kernel size = {1}
     MSE value between the original image and image recovered by:
-    1. Blur box method: {0:.2f}
-    2. Weiner method: {1:.2f}
-    3. Gaussian filter method: {2:.2f}
-    4. Median filter method: {3:.2f}
-      
-    psnr value between the original image and image recovered by:
-    1. Blur box method: {4:.2f}
-    2. Weiner method: {5:.2f}
-    3. Gaussian filter method: {6:.2f}
-    4. Median filter method: {7:.2f}
-      """.format(Map.mse(original_image, box_blur_recovered_image), Map.mse(original_image, weiner_recovered_image),
-                 Map.mse(original_image, gaussian_filter_recovered_image), Map.mse(original_image, weiner_recovered_image),
-                 Map.psnr(original_image, box_blur_recovered_image), Map.psnr(original_image, weiner_recovered_image),
-                 Map.psnr(original_image, gaussian_filter_recovered_image), Map.psnr(original_image, median_filter_recovered_image)))
+    1. Blur box filter method: {2:.2f}
+    2. Weiner filter method: {3:.2f}
+    3. Gaussian filter method: {4:.2f}
+    4. Low pass filter method: {5:.2f}
+      """.format(psnr, blur_kernel_size, Map.mse(original_image, box_blur_recovered_image), Map.mse(original_image, weiner_recovered_image),
+                 Map.mse(original_image, gaussian_recovered_image), Map.mse(original_image, low_pass_recovered_image)))
 
-plotting.plotting(original_image, noisy_image, box_blur_recovered_image, weiner_recovered_image, gaussian_filter_recovered_image, median_filter_recovered_image)
+plotting.plotting(original_image, noisy_image, box_blur_recovered_image, weiner_recovered_image, gaussian_recovered_image, low_pass_recovered_image)

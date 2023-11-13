@@ -10,15 +10,15 @@ def box_blur(image, kernel_size):
     kernel_value = np.ones((kernel_size, kernel_size))
     
     # Chuẩn hóa kernel để tổng giá trị bằng 1 (đối với box blur)
-    kernel_value /= np.sum(kernel_value)
+    kernel_value_normalized = kernel_value/ np.sum(kernel_value)
     
     # Áp dụng convolution
-    blurred_image = convolve2d(image, kernel_value, mode='same', boundary='symm')
+    blurred_image = convolve2d(image, kernel_value_normalized, mode='same', boundary='symm')
     
     return blurred_image
 
-def wiener_filter(img, kernel_size, K):
-    
+def wiener_filter(img, kernel_size):
+    K = .25
     # Normalize the kernel 
     normalized_kernel = np.ones((kernel_size, kernel_size)) / (kernel_size ** 2)
     # Pad the kernel to match the size of the image
@@ -29,7 +29,7 @@ def wiener_filter(img, kernel_size, K):
     kernel_fft = fft2(padded_kernel)
 
     # Wiener filter formula
-    kernel_fft = np.conj(kernel_fft) / (np.abs(kernel_fft) ** 2 + K)
+    kernel_fft = np.conj(kernel_fft) / (np.multiply(np.conj(kernel_fft),kernel_fft)+ K)
     img_fft_filtered = img_fft * kernel_fft
 
     # Inverse Fourier Transform
@@ -53,17 +53,14 @@ def gaussian_filter(image, kernel_size, sigma):
     filtered_image =  convolve2d(image, gaussian_kernel_value, mode='same', boundary="symm")
     return filtered_image
 
+def low_pass_filter(image, filter_type, filter_size):
+    if filter_type == 'gaussian':
+        kernel = cv2.getGaussianKernel(filter_size, 0)
+        low_pass_image = cv2.filter2D(image, -1, np.outer(kernel, kernel.transpose()))
+    elif filter_type == 'box':
+        kernel = np.ones((filter_size, filter_size), dtype=np.float32) / (filter_size ** 2)
+        low_pass_image = cv2.filter2D(image, -1, kernel)
+    else:
+        raise ValueError("Unsupported filter type")
 
-def median_filter(image, size):
-    rows, cols = image.shape
-    final_image = np.zeros(image.shape)
-
-    for i in range(rows):
-        for j in range(cols):
-            neighborhood = image[max(0, i - size//2):min(rows, i + size//2 + 1),
-                                max(0, j - size//2):min(cols, j + size//2 + 1)]
-
-            # Apply median filter
-            final_image[i, j] = np.median(neighborhood)
-
-    return final_image
+    return low_pass_image
