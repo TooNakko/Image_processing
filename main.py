@@ -6,7 +6,9 @@ import plotting
 import MSE_and_psnr as Map
 import time
 
-original_image = cv2.cvtColor(cv2.imread('HQ.jpg'), cv2.COLOR_BGR2GRAY)
+image_path = 'HQ.jpg'
+
+original_image = cv2.cvtColor(cv2.imread(image_path), cv2.COLOR_BGR2GRAY)
 
 while(True):
   print("Input the psnr:")
@@ -20,7 +22,7 @@ while(True):
   print("\nInput the blur kernel size:")
   blur_kernel_size = int(input())
   if(blur_kernel_size<0):
-    print("psnr must >= 0")
+    print("blur kernel size must >= 0")
     continue
   break
 
