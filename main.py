@@ -21,8 +21,8 @@ while(True):
 while(True):
   print("\nInput the blur kernel size:")
   blur_kernel_size = int(input())
-  if(blur_kernel_size<0):
-    print("blur kernel size must >= 0")
+  if(blur_kernel_size<=0):
+    print("blur kernel size must > 0")
     continue
   break
 
