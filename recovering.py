@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 from scipy.fft import fft2, ifft2
-from scipy.signal import convolve2d, fftconvolve
+from scipy.signal import convolve2d
 
 
 def box_blur(image, kernel_size):
@@ -43,15 +43,16 @@ def wiener_filter(img, kernel_size):
 
 
 def gaussian_filter(image, kernel_size, sigma):
-    #def gaussian_kernel(size, sigma):
     kernel = np.fromfunction(
         lambda x, y: (1 / (2 * np.pi * sigma ** 2)) *
-                     np.exp(-((x - (kernel_size - 1) / 2) ** 2 + (y - (kernel_size - 1) / 2) ** 2) / (2 * sigma ** 2)),
+                     np.exp(-((x - (kernel_size - 1) / 2) ** 2 +
+                              (y - (kernel_size - 1) / 2) ** 2) / (2 * sigma ** 2)),
         (kernel_size, kernel_size)
     )
     gaussian_kernel_value  =  kernel / np.sum(kernel)
 
-    filtered_image =  convolve2d(image, gaussian_kernel_value, mode='same', boundary="symm")
+    filtered_image =  convolve2d(image, gaussian_kernel_value,
+                                  mode='same', boundary="symm")
     return filtered_image
 
 

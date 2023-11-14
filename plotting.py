@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 
 def plotting(original_image, noisy_image, box_blur_recovered_image, weiner_recovered_image, gaussian_recovered_image,richardson_lucy_recovered_image):
     plt.figure(figsize=(16, 8))
-    
+
     plt.subplot(2,3, 1)
     plt.imshow(original_image, cmap="gray")
     plt.title('Original image')
