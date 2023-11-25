@@ -17,7 +17,7 @@ def box_blur(image, kernel_size):
     
     return blurred_image
 
-def wiener_filter(img, kernel_size):
+def wiener_filter(img, psnr, kernel_size):
     K = .5
     # Normalize the kernel 
     normalized_kernel = np.ones((kernel_size, kernel_size)) / (kernel_size ** 2)
@@ -25,7 +25,6 @@ def wiener_filter(img, kernel_size):
     padded_kernel = np.pad(normalized_kernel, [(0, img.shape[0] - normalized_kernel.shape[0]), 
                                                (0, img.shape[1] - normalized_kernel.shape[1])],
                                                 'constant')
-
     # Fourier Transform of the image and kernel
     img_fft = fft2(img)
     kernel_fft = fft2(padded_kernel)
@@ -35,12 +34,10 @@ def wiener_filter(img, kernel_size):
     img_fft_filtered = img_fft * kernel_fft
 
     # Inverse Fourier Transform
-    img_filtered = np.abs(ifft2(img_fft_filtered))
+    final_image = np.abs(ifft2(img_fft_filtered))
 
     # Convert to uint8 for image display
-    return img_filtered
-
-
+    return final_image
 
 def gaussian_filter(image, kernel_size, sigma):
     kernel = np.fromfunction(
@@ -60,6 +57,7 @@ def gaussian_filter(image, kernel_size, sigma):
 def richardson_lucy_filter(img_noisy, kernel_size, iterations):
     kernel = cv2.getGaussianKernel(kernel_size, 0)
     psf = np.outer(kernel, kernel.transpose())
+    psf /= psf.sum()
     # Define the initial estimate of the true image
     final_img = np.ones_like(img_noisy, dtype=float)
     # Iterate Richardson-Lucy deconvolution

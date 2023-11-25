@@ -38,7 +38,7 @@ print("Took {0:.2f} seconds.\n".format(time.time() - temp_time))
 
 temp_time = time.time()
 print("Processing weiner method---")
-weiner_recovered_image = rcv.wiener_filter(noisy_image, 5)
+weiner_recovered_image = rcv.wiener_filter(noisy_image, psnr, 5)
 print("Took {0:.2f} seconds.\n".format(time.time() - temp_time))
 
 temp_time = time.time()
