@@ -1,15 +1,17 @@
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy.signal import convolve2d
+import numpy as np
+import cv2
 
 def add_gaussian_noise(img, psnr):
-    mean = 0
-    sigma = 1000 *  10 ** (-psnr / 20.0)
 
-    gaussian = np.random.normal(mean, sigma, (img.shape[0], img.shape[1])) 
-    noisy_image = np.zeros(img.shape)
-    noisy_image = img + gaussian
-    cv2.normalize(noisy_image, noisy_image, 0, 255, cv2.NORM_MINMAX, dtype=-1)
+    mean = 0
+    sigma = 1000 * 10 ** (-psnr / 20.0)
+    gaussian_noise = np.random.normal(mean, sigma, img.shape)
+    noisy_image = img + gaussian_noise
+    noisy_image = np.clip(noisy_image, 0, 255)
     return noisy_image
 
 def add_blur(image, kernel_size):

@@ -53,13 +53,13 @@ print("Took {0:.2f} seconds.".format(time.time() - temp_time))
 
 
 print("""
-    With psnr = {0}, blur kernel size = {1}
+    With psnr = {0}, blur kernel size = {1} we have MSE value of noisy image: {2:.2f}
     MSE value between the original image and image recovered by:
-    1. Blur box filter method: {2:.2f}
-    2. Weiner filter method: {3:.2f}
-    3. Gaussian filter method: {4:.2f}
-    4. Richardson and Lucy filter method: {5:.2f}
-      """.format(psnr, blur_kernel_size, Map.mse(original_image, box_blur_recovered_image), Map.mse(original_image, weiner_recovered_image),
+    1. Blur box filter method: {3:.2f}
+    2. Weiner filter method: {4:.2f}
+    3. Gaussian filter method: {5:.2f}
+    4. Richardson and Lucy filter method: {6:.2f}
+      """.format(psnr, blur_kernel_size, Map.mse(original_image, noisy_image), Map.mse(original_image, box_blur_recovered_image), Map.mse(original_image, weiner_recovered_image),
                  Map.mse(original_image, gaussian_recovered_image), Map.mse(original_image, richardson_lucy_recovered_image)))
 
 plotting.plotting(original_image, noisy_image, box_blur_recovered_image, weiner_recovered_image, gaussian_recovered_image, richardson_lucy_recovered_image)
