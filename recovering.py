@@ -18,6 +18,7 @@ def box_blur(image, kernel_size):
     return blurred_image
 
 def wiener_filter(img, psnr, kernel_size):
+    
     K = .5
     # Normalize the kernel 
     normalized_kernel = np.ones((kernel_size, kernel_size)) / (kernel_size ** 2)
@@ -39,6 +40,7 @@ def wiener_filter(img, psnr, kernel_size):
     # Convert to uint8 for image display
     return final_image
 
+
 def gaussian_filter(image, kernel_size, sigma):
     kernel = np.fromfunction(
         lambda x, y: (1 / (2 * np.pi * sigma ** 2)) *
@@ -51,8 +53,6 @@ def gaussian_filter(image, kernel_size, sigma):
     filtered_image =  convolve2d(image, gaussian_kernel_value,
                                   mode='same', boundary="symm")
     return filtered_image
-
-
 
 def richardson_lucy_filter(img_noisy, kernel_size, iterations):
     kernel = cv2.getGaussianKernel(kernel_size, 0)
