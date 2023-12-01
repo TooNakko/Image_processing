@@ -6,7 +6,6 @@ import numpy as np
 import cv2
 
 def add_gaussian_noise(img, psnr):
-
     mean = 0
     sigma = 1000 * 10 ** (-psnr / 20.0)
     gaussian_noise = np.random.normal(mean, sigma, img.shape)

@@ -6,7 +6,7 @@ import plotting
 import MSE_and_psnr as Map
 import time
 
-image_path = 'HQ.jpg'
+image_path = 'HQ.jpg'  #input your image's path here
 
 original_image = cv2.cvtColor(cv2.imread(image_path), cv2.COLOR_BGR2GRAY)
 
@@ -53,7 +53,7 @@ print("Took {0:.2f} seconds.".format(time.time() - temp_time))
 
 
 print("""
-    With psnr = {0}, blur kernel size = {1} we have MSE value of noisy image: {2:.2f}
+    With psnr = {0}, blur kernel size = {1} we have MSE value between the original image and the noisy image: {2:.2f}
     MSE value between the original image and image recovered by:
     1. Blur box filter method: {3:.2f}
     2. Weiner filter method: {4:.2f}

@@ -1,6 +1,5 @@
 import numpy as np
 
-# tinh mse giua 2 anh
 def mse(imgage_1, imgage_2):
     return np.mean(np.square(np.subtract(imgage_1.astype(np.int32),
                                          imgage_2.astype(np.int32))))
