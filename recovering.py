@@ -17,9 +17,8 @@ def box_blur(image, kernel_size):
     
     return blurred_image
 
-def wiener_filter(img, psnr, kernel_size):
-    
-    K = .5
+def wiener_filter(img, kernel_size):
+    K = 0.5
     # Normalize the kernel 
     normalized_kernel = np.ones((kernel_size, kernel_size)) / (kernel_size ** 2)
     # Pad the kernel to match the size of the image
