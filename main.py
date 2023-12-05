@@ -6,7 +6,7 @@ import plotting
 import MSE_and_psnr as Map
 import time
 
-image_path = 'conrs.jpg'  #input your image's path here
+image_path = 'HQ.jpg'  #input your image's path here
 
 original_image = cv2.cvtColor(cv2.imread(image_path), cv2.COLOR_BGR2GRAY)
 
